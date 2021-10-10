@@ -7,9 +7,6 @@
             "email": "temicska99@mail.ru"
         }
     ],
-    "provide": {
-        "artarts36/file-system-contracts": "*"
-    },
     "require": {
         "artarts36/file-system-contracts": "^0.2.0"
     },
