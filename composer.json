@@ -1,6 +1,8 @@
 {
     "name": "artarts36/local-file-system",
     "type": "library",
+    "license": "MIT",
+    "description": "Local File System",
     "authors": [
         {
             "name": "ArtARTs36",
