@@ -1,0 +1,41 @@
+{
+    "name": "artarts36/local-file-system",
+    "type": "library",
+    "authors": [
+        {
+            "name": "ArtARTs36",
+            "email": "temicska99@mail.ru"
+        }
+    ],
+    "provide": {
+        "artarts36/file-system-contracts": "*"
+    },
+    "require": {
+        "artarts36/file-system-contracts": "^0.2.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "squizlabs/php_codesniffer": "^3.6"
+    },
+    "scripts": {
+        "lint": [
+            "echo 'Check code on PSR'",
+            "./vendor/bin/phpcs --standard=PSR2 src/",
+            "./vendor/bin/phpcs --standard=PSR2 tests/"
+        ],
+        "test": [
+            "echo 'Run tests'",
+            "./vendor/bin/phpunit -v --coverage-text --configuration phpunit.xml"
+        ]
+    },
+    "autoload": {
+        "psr-4": {
+            "ArtARTs36\\FileSystem\\Local\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ArtARTs36\\FileSystem\\Local\\Tests\\": "tests"
+        }
+    }
+}
