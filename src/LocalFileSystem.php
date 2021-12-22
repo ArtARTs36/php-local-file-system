@@ -2,6 +2,7 @@
 
 namespace ArtARTs36\FileSystem\Local;
 
+use ArtARTs36\FileSystem\Contracts\FileNotFound;
 use ArtARTs36\FileSystem\Contracts\FileSystem;
 
 class LocalFileSystem implements FileSystem
@@ -15,9 +16,7 @@ class LocalFileSystem implements FileSystem
 
     public function removeFile(string $path): bool
     {
-        if (! $this->exists($path)) {
-            throw new LocalFileNotFound($path);
-        }
+        $this->raiseFileNotFoundIfNotExists($path);
 
         return unlink($path);
     }
@@ -85,18 +84,14 @@ class LocalFileSystem implements FileSystem
 
     public function getFileContent(string $path): string
     {
-        if (! $this->exists($path)) {
-            throw new LocalFileNotFound($path);
-        }
+        $this->raiseFileNotFoundIfNotExists($path);
 
         return file_get_contents($path);
     }
 
     public function getLastUpdateDate(string $path): \DateTimeInterface
     {
-        if (! $this->exists($path)) {
-            throw new LocalFileNotFound($path);
-        }
+        $this->raiseFileNotFoundIfNotExists($path);
 
         $dateGetter = $this->fileDateGetter;
 
@@ -105,9 +100,7 @@ class LocalFileSystem implements FileSystem
 
     public function getAbsolutePath(string $path): string
     {
-        if (! $this->exists($path)) {
-            throw new LocalFileNotFound($path);
-        }
+        $this->raiseFileNotFoundIfNotExists($path);
 
         return realpath($path);
     }
@@ -115,5 +108,15 @@ class LocalFileSystem implements FileSystem
     public function getTmpDir(): string
     {
         return sys_get_temp_dir();
+    }
+
+    /**
+     * @throws FileNotFound
+     */
+    protected function raiseFileNotFoundIfNotExists(string $path): void
+    {
+        if (! $this->exists($path)) {
+            throw new LocalFileNotFound($path);
+        }
     }
 }
