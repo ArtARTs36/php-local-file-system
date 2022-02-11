@@ -22,7 +22,7 @@ jobs:
       uses: actions/cache@v2
       with:
         path: vendor
-        key: ${{ runner.os }}-php-$GITHUB_REF-${{ hashFiles('**/composer.lock') }}
+        key: ${{ runner.os }}-php-$GITHUB_REF-${{ hashFiles('**/composer.json') }}
         restore-keys: |
           ${{ runner.os }}-php-
 
@@ -32,6 +32,9 @@ jobs:
 
     - name: Lint
       run: composer lint
+
+    - name: Stat Analyse
+      run: composer stat-analyse
 
     - name: Run Tests
       run: composer test

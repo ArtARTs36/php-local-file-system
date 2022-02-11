@@ -21,3 +21,11 @@ $fs = new LocalFileSystem();
 
 $fs->removeDir('/etc/');
 ````
+
+## Development Console
+
+| Command               | Description                        |
+|-----------------------|------------------------------------|
+| composer lint         | Check code on PSR (PHP CS Sniffer) |
+| composer stat-analyse | Run stat-analyse (PHPStan)         |
+| composer test         | Run tests (PHPUnit)                |

@@ -7,6 +7,7 @@ use ArtARTs36\FileSystem\Contracts\FileSystem;
 
 class LocalFileSystem implements FileSystem
 {
+    /** @var callable|callable-string */
     protected $fileDateGetter;
 
     public function __construct(?callable $fileDateGetter = null)
@@ -51,7 +52,18 @@ class LocalFileSystem implements FileSystem
 
         return array_values(array_map(function (string $file) use ($path) {
             return $path . DIRECTORY_SEPARATOR . $file;
-        }, array_diff(scandir($this->getAbsolutePath($path)), ['.', '..'])));
+        }, $this->scanDir($path)));
+    }
+
+    /**
+     * @return array<string>
+     * @throws FileNotFound
+     */
+    protected function scanDir(string $path): array
+    {
+        $files = scandir($this->getAbsolutePath($path));
+
+        return $files === false ? [] : array_diff($files, ['.', '..']);
     }
 
     public function downPath(string $path): string
@@ -86,7 +98,7 @@ class LocalFileSystem implements FileSystem
     {
         $this->raiseFileNotFoundIfNotExists($path);
 
-        return file_get_contents($path);
+        return file_get_contents($path); // @phpstan-ignore-line
     }
 
     public function getLastUpdateDate(string $path): \DateTimeInterface
@@ -102,7 +114,7 @@ class LocalFileSystem implements FileSystem
     {
         $this->raiseFileNotFoundIfNotExists($path);
 
-        return realpath($path);
+        return realpath($path); // @phpstan-ignore-line
     }
 
     public function getTmpDir(): string

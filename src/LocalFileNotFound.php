@@ -7,6 +7,7 @@ use Throwable;
 
 class LocalFileNotFound extends \Exception implements FileNotFound
 {
+    /** @var string */
     private $invalidFilePath;
 
     public function __construct(string $invalidFilePath, int $code = 0, Throwable $previous = null)
