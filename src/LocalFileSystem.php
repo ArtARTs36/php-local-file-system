@@ -52,7 +52,18 @@ class LocalFileSystem implements FileSystem
 
         return array_values(array_map(function (string $file) use ($path) {
             return $path . DIRECTORY_SEPARATOR . $file;
-        }, array_diff(scandir($this->getAbsolutePath($path)), ['.', '..'])));
+        }, $this->scanDir($path)));
+    }
+
+    /**
+     * @return array<string>
+     * @throws FileNotFound
+     */
+    protected function scanDir(string $path): array
+    {
+        $files = scandir($this->getAbsolutePath($path));
+
+        return $files === false ? [] : array_diff($files, ['.', '..']);
     }
 
     public function downPath(string $path): string
