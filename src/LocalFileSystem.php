@@ -7,7 +7,7 @@ use ArtARTs36\FileSystem\Contracts\FileSystem;
 
 class LocalFileSystem implements FileSystem
 {
-    /** @var callable|string */
+    /** @var callable|callable-string */
     protected $fileDateGetter;
 
     public function __construct(?callable $fileDateGetter = null)
