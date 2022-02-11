@@ -23,12 +23,12 @@
             "./vendor/bin/phpcs --standard=PSR2 src/",
             "./vendor/bin/phpcs --standard=PSR2 tests/"
         ],
+        "stat-analyse": [
+            "./vendor/bin/phpstan analyse src -l 9"
+        ],
         "test": [
             "echo 'Run tests'",
             "./vendor/bin/phpunit -v --coverage-text --configuration phpunit.xml"
-        ],
-        "stat-analyse": [
-            "./vendor/bin/phpstan analyse src -l 9"
         ]
     },
     "autoload": {
