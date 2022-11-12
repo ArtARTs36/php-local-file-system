@@ -7,9 +7,12 @@ use ArtARTs36\FileSystem\Contracts\FileSystem;
 
 class LocalFileSystem implements FileSystem
 {
-    /** @var callable|callable-string */
+    /** @var callable(string):int|callable-string */
     protected $fileDateGetter;
 
+    /**
+     * @param callable(string):int|callable-string|null $fileDateGetter
+     */
     public function __construct(?callable $fileDateGetter = null)
     {
         $this->fileDateGetter = $fileDateGetter ?? 'filemtime';
