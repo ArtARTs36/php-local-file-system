@@ -5,16 +5,20 @@ namespace ArtARTs36\FileSystem\Local;
 use ArtARTs36\FileSystem\Contracts\FileNotFound;
 use ArtARTs36\FileSystem\Contracts\FileSystem;
 
+/**
+ * @phpstan-type FileDateGetter = callable-string | callable(string): int
+ */
 class LocalFileSystem implements FileSystem
 {
-    /** @var callable(string):int|callable-string */
+    /** @var FileDateGetter */
     protected $fileDateGetter;
 
     /**
-     * @param callable(string):int|callable-string|null $fileDateGetter
+     * @param FileDateGetter|null $fileDateGetter
      */
-    public function __construct(?callable $fileDateGetter = null)
-    {
+    public function __construct(
+        ?callable $fileDateGetter = null
+    ) {
         $this->fileDateGetter = $fileDateGetter ?? 'filemtime';
     }
 
@@ -123,6 +127,25 @@ class LocalFileSystem implements FileSystem
     public function getTmpDir(): string
     {
         return sys_get_temp_dir();
+    }
+
+    public function isDirectory(string $path): bool
+    {
+        $this->raiseFileNotFoundIfNotExists($path);
+
+        return is_dir($path);
+    }
+
+    public function copy(string $from, string $to): void
+    {
+        copy($from, $to);
+    }
+
+    public function append(string $path, string $content): void
+    {
+        $this->raiseFileNotFoundIfNotExists($path);
+
+        file_put_contents($path, $content, FILE_APPEND);
     }
 
     /**
